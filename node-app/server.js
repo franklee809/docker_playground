@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
+const fs = require('fs');
 
 let userGoal = 'Learn Docker!';
 
@@ -13,7 +14,7 @@ app.use(
 
 app.use(express.static('public'));
 
-app.get('/', (req, res) => {
+app.get('/', (request, res) => {
   res.send(`
     <html>
       <head>
@@ -36,10 +37,19 @@ app.get('/', (req, res) => {
   `);
 });
 
-app.post('/store-goal', (req, res) => {
-  const enteredGoal = req.body.goal;
+app.post('/store-goal', (request, res) => {
+  const enteredGoal = request.body.goal;
   console.log(enteredGoal);
   userGoal = enteredGoal;
+  let body = '';
+    filePath = __dirname + '/public/data.txt';
+    body += userGoal;
+    fs.appendFile(filePath, body, (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+
   res.redirect('/');
 });
 
