@@ -8,6 +8,8 @@ RUN npm install
 
 COPY . /app/.
 
-ENTRYPOINT [ "node", "server.js" ]
+# VOLUME [ "/app/node_modules" ]
+
+ENTRYPOINT [ "npm", "start" ]
 
 EXPOSE 80
