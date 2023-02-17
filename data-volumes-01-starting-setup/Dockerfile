@@ -13,6 +13,8 @@ COPY . /app/.
 
 # VOLUME [ "/app/temp" ]
 
+ENV APP_PORT 80
+
 ENTRYPOINT [ "npm", "start" ]
 
-EXPOSE 80
+EXPOSE $APP_PORT
