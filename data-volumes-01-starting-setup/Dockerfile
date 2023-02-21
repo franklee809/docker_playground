@@ -9,11 +9,13 @@ RUN npm install
 # can ignore this step during development
 COPY . /app/.
 
+ARG DEFAULT_PORT=80
+
 # VOLUME [ "/app/node_modules" ]
 
 # VOLUME [ "/app/temp" ]
 
-ENV APP_PORT 80
+ENV APP_PORT ${DEFAULT_PORT}
 
 ENTRYPOINT [ "npm", "start" ]
 
