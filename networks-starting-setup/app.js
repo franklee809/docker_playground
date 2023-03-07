@@ -69,7 +69,7 @@ app.get('/people', async (req, res) => {
 
 mongoose.connect(
   // 'mongodb://host.docker.internal:27017/swfavorites', // for localhost to container communication
-  'mongodb://172.17.0.3:27017/swfavorites',
+  'mongodb://172.17.0.3:27017/swfavorites',  // use docker inspect container_id and get the ip_address
   {
     useNewUrlParser: true,
     useUnifiedTopology: true
