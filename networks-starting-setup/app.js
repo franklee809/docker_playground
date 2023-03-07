@@ -68,8 +68,12 @@ app.get('/people', async (req, res) => {
 });
 
 mongoose.connect(
-  'mongodb://localhost:27017/swfavorites',
-  { useNewUrlParser: true },
+  // 'mongodb://host.docker.internal:27017/swfavorites', // for localhost to container communication
+  'mongodb://172.17.0.3:27017/swfavorites',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  },
   (err) => {
     if (err) {
       console.log(err);
