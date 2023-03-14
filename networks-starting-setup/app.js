@@ -20,7 +20,8 @@ app.post('/favorites', async (req, res) => {
   const favName = req.body.name;
   const favType = req.body.type;
   const favUrl = req.body.url;
-
+  console.log({favType});
+  console.log("🚀 ~ file: app.js:25 ~ app.post ~ req.body:", req.body)
   try {
     if (favType !== 'movie' && favType !== 'character') {
       throw new Error('"type" should be "movie" or "character"!');
@@ -69,7 +70,8 @@ app.get('/people', async (req, res) => {
 
 mongoose.connect(
   // 'mongodb://host.docker.internal:27017/swfavorites', // for localhost to container communication
-  'mongodb://172.17.0.3:27017/swfavorites',  // use docker inspect container_id and get the ip_address
+  'mongodb://mongodb:27017/swfavorites',  // use docker inspect container_id and get the ip_address
+  // or use the container name which is under the same network bridge
   {
     useNewUrlParser: true,
     useUnifiedTopology: true
