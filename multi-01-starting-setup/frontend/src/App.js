@@ -26,7 +26,7 @@ function App() {
       } catch (err) {
         setError(
           err.message ||
-            'Fetching goals failed - the server responsed with an error.'
+            'Fetching goals failed - the server responsed with an error. '
         );
       }
       setIsLoading(false);
