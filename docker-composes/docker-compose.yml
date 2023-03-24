@@ -1,26 +1,47 @@
 version: '3.8'
 services:
-  # backend:
+  backend:
+    # build: '../multi-01-starting-setup/backend' # shortform
+    build:
+      context: '../multi-01-starting-setup/backend' # longer form
+      dockerfile: Dockerfile
+    ports:
+      - '3000:80'
+    volumes:
+      - logs:/www/html/app/logs
+      - ../multi-01-starting-setup/backend:/www/html/app
+      - /www/html/app/node_modules
+    env_file:
+      - ./env/backend.env
+    depends_on:
+      - mongodb
+  frontend:
 
-  # frontend:
 
   mongodb:
     image: 'mongo'
     container_name: 'mongodb'
     volumes:
       - data:/data/db
-    environment:
-     # MONGO_INITDB_ROOT_USERNAME: admin (same as below)
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=12345678
-    # env_file:
-    #   - './env/mongo.env'
+    # environment:
+     # MONGO_INITDB_ROOT_USERNAME: admin (same as below just another format).
+      # - MONGO_INITDB_ROOT_USERNAME=admin
+      # - MONGO_INITDB_ROOT_PASSWORD=12345678
+    env_file:
+      - ./env/mongo.env
     # networks:
     #   - 'goals-network' # all services in one docker compose file will have the same network
 volumes:
   data:
+  logs:
 
 
 # mongo db docker run
 #  docker run --name mongodb --rm -d --network goals-network -v data:/data/db -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=12345678 mongo
 # --rm and -d can be ignored in a docker-compose file
+
+# backend node docker run
+#  docker run --name goals-backend --rm -d -p 81:80 --network goals-network -v logs:/www/html/app/logs -v /Users/franklee/docker_playground/multi-01-starting-setup/backend:/www/html/app -v /www/html/app/node_modules node-backend
+
+# frontend node docker run
+# docker run --name goals-frontend --rm -d -p 3000:3000 -v /Users/franklee/docker_playground/multi-01-starting-setup/frontend/src:/www/html/app/src goals_react
