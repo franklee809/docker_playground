@@ -1,12 +1,13 @@
 version: '3.8'
 services:
   backend:
+    container_name: goals-backend
     # build: '../multi-01-starting-setup/backend' # shortform
     build:
       context: '../multi-01-starting-setup/backend' # longer form
       dockerfile: Dockerfile
     ports:
-      - '3000:80'
+      - '81:80'
     volumes:
       - logs:/www/html/app/logs
       - ../multi-01-starting-setup/backend:/www/html/app
@@ -16,8 +17,18 @@ services:
     depends_on:
       - mongodb
   frontend:
-
-
+    container_name: goals-frontend
+    build:
+      context: '../multi-01-starting-setup/frontend'
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - ../multi-01-starting-setup/frontend/src:/www/html/app/src
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
   mongodb:
     image: 'mongo'
     container_name: 'mongodb'
