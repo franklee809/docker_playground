@@ -2,7 +2,7 @@ FROM node:19-alpine
 
 WORKDIR /app
 
-ENTRYPOINT [ "npm" ]
+ENTRYPOINT ["npm"]
 
 # docker build -t node-util .
 # docker run -it -v /Users/franklee/docker_playground/utility-container:/app node-util
