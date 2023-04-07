@@ -30,8 +30,11 @@ RUN pecl install zip && docker-php-ext-enable zip \
     && yes | pecl install redis && docker-php-ext-enable redis
 
 # copy supervisor configuration
-COPY ./supervisord.conf /etc/supervisord.conf
+COPY dockerfiles/supervisord.conf /etc/supervisord.conf
 
+COPY src .
+
+RUN chown -R www-data:www-data /var/www/html
 # run supervisor
 
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
