@@ -1,20 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('Build') {
-      parallel {
-        stage('Build') {
-          steps {
-            sh 'cd deployment-01-starting-setup && docker build -t franklee809/node-example-1 .'
-          }
-        }
-
-        stage('Checkout git') {
-          steps {
-            git(url: 'https://github.com/franklee809/docker_playground', branch: 'main')
-          }
-        }
-
+    stage('Checkout git') {
+      steps {
+        git(url: 'https://github.com/franklee809/docker_playground', branch: 'main')
       }
     }
 
@@ -24,7 +13,13 @@ pipeline {
       }
     }
 
-    stage('Push') {
+    stage('Build image') {
+      steps {
+        sh 'docker build -t franklee809/node-example-1 .'
+      }
+    }
+
+    stage('Push Docker image') {
       steps {
         sh 'docker push franklee809/node-example-1'
       }
