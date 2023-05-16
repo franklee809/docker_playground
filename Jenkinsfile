@@ -13,5 +13,11 @@ pipeline {
       }
     }
 
+    stage('Build image') {
+      steps {
+        sh 'docker build -t franklee809/node-example-1 .'
+      }
+    }
+
   }
 }
