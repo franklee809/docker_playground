@@ -29,12 +29,6 @@ pipeline {
   environment {
     DOCKERHUB_CREDENTIALS = credentials('dockerhub')
   }
-  post {
-    always {
-      sh 'docker logout'
-    }
-
-  }
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
