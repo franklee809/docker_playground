@@ -9,8 +9,7 @@ pipeline {
 
     stage('Change directory') {
       steps {
-        dir(path: '/deployment-01-starting-setup')
-        pwd(tmp: true)
+        sh 'cd deployment-01-starting-setup'
       }
     }
 
