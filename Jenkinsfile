@@ -7,9 +7,9 @@ pipeline {
       }
     }
 
-    stage('log test') {
+    stage('Change directory') {
       steps {
-        sh 'ls -la '
+        dir(path: 'deployment-01-starting-setup')
       }
     }
 
