@@ -1,16 +1,34 @@
 pipeline {
   agent any
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '5'))
+  }
+  environment {
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+  }
   stages {
-    stage('Build image') {
+    stage('Checkout') {
       steps {
-        sh 'cd deployment-01-starting-setup && docker build -t franklee809/node-example-1 .'
+        git(url: 'https://github.com/franklee809/docker_playground', branch: 'main')
       }
     }
 
-    stage('Docker login') {
+    stage('Change directory') {
       steps {
-        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+        sh 'cd deployment-01-starting-setup'
       }
+    }
+
+    stage('Build image') {
+      steps {
+        sh 'docker build -t franklee809/node-example-1 .'
+      }
+    }
+
+    stage("Docker login") {
+        steps {
+          sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+        }
     }
 
     stage('Docker Push') {
@@ -19,11 +37,5 @@ pipeline {
       }
     }
 
-  }
-  environment {
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-  }
-  options {
-    buildDiscarder(logRotator(numToKeepStr: '5'))
   }
 }
